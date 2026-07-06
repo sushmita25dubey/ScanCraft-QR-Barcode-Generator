@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScanCraft | Advanced QR & Barcode Generator</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Generate high-quality, customizable QR Codes and Barcodes with custom colors, sizes, and formats. Fully responsive, clean, and instant download.">
+    <meta name="keywords" content="qr code generator, barcode generator, code128, customizable qr, free qr generator, scan generator">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Local CSS Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Elements for Premium Look -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <div class="app-container">
+        <!-- Navigation/Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i data-lucide="qr-code" class="logo-icon"></i>
+                <span class="logo-text">ScanCraft</span>
+            </div>
+            
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle Theme">
+                <i data-lucide="moon" class="theme-icon moon-icon"></i>
+                <i data-lucide="sun" class="theme-icon sun-icon"></i>
+            </button>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="main-content">
+            <!-- Left Panel: Configurations & Input -->
+            <section class="panel-left glass-card">
+                <!-- Mode Switch Tabs -->
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-mode="qr" role="tab" aria-selected="true" aria-controls="input-panel">
+                        <i data-lucide="qr-code"></i>
+                        <span>QR Code</span>
+                    </button>
+                    <button class="tab-btn" data-mode="barcode" role="tab" aria-selected="false" aria-controls="input-panel">
+                        <i data-lucide="barcode"></i>
+                        <span>Barcode</span>
+                    </button>
+                </div>
+
+                <!-- Input Panel -->
+                <div class="input-container" id="input-panel">
+                    <label for="code-input" class="input-label">
+                        <span id="input-label-text">Enter Content</span>
+                        <span id="char-counter">0 / 500</span>
+                    </label>
+                    <div class="textarea-wrapper">
+                        <textarea id="code-input" rows="4" placeholder="Enter URL, text, email, phone number, or Wi-Fi configuration..." aria-required="true"></textarea>
+                        <button id="clear-input-btn" class="clear-input-btn" aria-label="Clear input text" title="Clear text">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                    <div id="validation-msg" class="validation-msg" role="alert"></div>
+                </div>
+
+                <!-- Customization Panel -->
+                <div class="customization-container">
+                    <h3 class="section-title">
+                        <i data-lucide="sliders"></i>
+                        <span>Customize Appearance</span>
+                    </h3>
+                    
+                    <!-- QR Customization Fields -->
+                    <div id="qr-options" class="options-grid fade-in">
+                        <div class="option-group">
+                            <label for="qr-size" class="option-label">Size</label>
+                            <div class="select-wrapper">
+                                <select id="qr-size">
+                                    <option value="128">Small (128x128)</option>
+                                    <option value="256" selected>Medium (256x256)</option>
+                                    <option value="384">Large (384x384)</option>
+                                </select>
+                                <i data-lucide="chevron-down" class="select-arrow"></i>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="qr-fg-color" class="option-label">Foreground Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="qr-fg-color" value="#0f172a">
+                                <span class="color-val">#0F172A</span>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="qr-bg-color" class="option-label">Background Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="qr-bg-color" value="#ffffff">
+                                <span class="color-val">#FFFFFF</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Barcode Customization Fields -->
+                    <div id="barcode-options" class="options-grid hidden fade-in">
+                        <div class="option-group checkbox-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="barcode-show-text" checked>
+                                <span class="checkmark"></span>
+                                <span class="option-label">Display value below code</span>
+                            </label>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="barcode-fg-color" class="option-label">Line Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="barcode-fg-color" value="#0f172a">
+                                <span class="color-val">#0F172A</span>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="barcode-bg-color" class="option-label">Background Color</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="barcode-bg-color" value="#ffffff">
+                                <span class="color-val">#FFFFFF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Trigger Buttons -->
+                <div class="buttons-row">
+                    <button id="generate-btn" class="btn btn-primary ripple-effect">
+                        <i data-lucide="sparkles" class="btn-icon"></i>
+                        <span>Generate Code</span>
+                    </button>
+                    <button id="reset-all-btn" class="btn btn-secondary ripple-effect">
+                        <i data-lucide="refresh-cw" class="btn-icon"></i>
+                        <span>Reset All</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Panel: Code Preview and Actions -->
+            <section class="panel-right glass-card">
+                <div class="preview-header">
+                    <h3 class="section-title">
+                        <i data-lucide="eye"></i>
+                        <span>Live Preview</span>
+                    </h3>
+                </div>
+
+                <!-- Output Area (Dynamic State) -->
+                <div class="preview-container">
+                    <!-- Empty State -->
+                    <div id="preview-empty-state" class="preview-state active-state">
+                        <div class="empty-illustration">
+                            <div class="pulse-ring"></div>
+                            <i data-lucide="qr-code" class="empty-icon-qr"></i>
+                            <i data-lucide="barcode" class="empty-icon-barcode"></i>
+                        </div>
+                        <h4 class="empty-title">Ready to Create</h4>
+                        <p class="empty-description">Fill in the input details and customize the styling to generate your custom scan code.</p>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="preview-loading-state" class="preview-state hidden">
+                        <div class="spinner-container">
+                            <div class="spinner"></div>
+                            <div class="spinner-inner"></div>
+                        </div>
+                        <p class="loading-text">Generating your code...</p>
+                    </div>
+
+                    <!-- Success State -->
+                    <div id="preview-success-state" class="preview-state hidden">
+                        <!-- Code Output Wrapper -->
+                        <div class="output-card">
+                            <div id="qr-output" class="code-wrapper hidden"></div>
+                            <div id="barcode-output-wrapper" class="code-wrapper hidden">
+                                <svg id="barcode-output"></svg>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons under Output -->
+                        <div class="output-actions">
+                            <button id="download-btn" class="btn btn-accent ripple-effect">
+                                <i data-lucide="download"></i>
+                                <span>Download PNG</span>
+                            </button>
+                            <button id="copy-btn" class="btn btn-secondary ripple-effect">
+                                <i data-lucide="copy"></i>
+                                <span>Copy Text</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>ScanCraft &copy; 2026 SUSHMITA DUBEY</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- External Libraries CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+    
+    <!-- Lucide Icons Library -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Local JS Link -->
+    <script src="script.js"></script>
+</body>
+</html>
