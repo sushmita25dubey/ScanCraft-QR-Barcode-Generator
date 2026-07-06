@@ -46,7 +46,8 @@ This project is **Day 4** of my **"30 Days, Build Something New"** challenge.
 
 ## 📷 Preview
 
-Live URL:
+Live URL: https://sushmita25dubey.github.io/ScanCraft-QR-Barcode-Generator/
+
 ---
 
 ## 📂 Project Structure
